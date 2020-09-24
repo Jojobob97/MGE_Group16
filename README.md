@@ -1,7 +1,7 @@
 # MGE_Group16
 Miniprojekt
 
-App Name: Tasktracker
+App Name: Task Tracker
 
 Grundidee: Tasks erstellen, planen, tracken und Fortschritt anzeigen.
 
