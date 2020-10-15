@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TaskTracker</string>
+    <string name="detail_target">Target:</string>
+    <string name="detail_actual">Actual:</string>
 </resources>
