@@ -4,4 +4,6 @@
     <string name="edit_target_text">Target effort</string>
     <string name="detail_target">Target:</string>
     <string name="detail_actual">Actual:</string>
+    <string name="edit_save_button">Save</string>
+    <string name="new_task_btn">New Task</string>
 </resources>
