@@ -1,26 +1,47 @@
 package ch.ost.rj.mge.tasktracker.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import ch.ost.rj.mge.tasktracker.R;
+import ch.ost.rj.mge.tasktracker.adapters.TaskAdapter;
+import ch.ost.rj.mge.tasktracker.adapters.TaskViewHolder;
+import ch.ost.rj.mge.tasktracker.model.TaskRepository;
 
 public class OverviewActivity extends AppCompatActivity {
-    Button toEditBtn;
+    FloatingActionButton floating_new_btn;
     Button toDetailBtn;
+    RecyclerView.Adapter<TaskViewHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-        toEditBtn = findViewById(R.id.toEditButton);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        adapter = new TaskAdapter(TaskRepository.getTasks());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+
+        RecyclerView recyclerView = findViewById(R.id.overview_tasks);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        floating_new_btn = findViewById(R.id.floating_action_button_new);
         toDetailBtn = findViewById(R.id.toDetailButton);
 
-        toEditBtn.setOnClickListener(v -> {
+        floating_new_btn.setOnClickListener(v -> {
             Intent intent = EditActivity.createIntent(this);
             startActivity(intent);
         });
