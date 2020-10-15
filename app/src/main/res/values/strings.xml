@@ -4,4 +4,5 @@
     <string name="edit_target_text">Target effort</string>
     <string name="detail_target">Target:</string>
     <string name="detail_actual">Actual:</string>
+    <string name="detail_start">Start/Stop</string>
 </resources>
