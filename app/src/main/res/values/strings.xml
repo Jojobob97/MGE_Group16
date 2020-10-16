@@ -2,8 +2,9 @@
     <string name="app_name">TaskTracker</string>
     <string name="edit_title_text">Title</string>
     <string name="edit_target_text">Target effort</string>
-    <string name="detail_target">Target:</string>
-    <string name="detail_actual">Actual:</string>
+    <string name="detail_start">Start/Stop</string>
     <string name="edit_save_button">Save</string>
     <string name="new_task_btn">New Task</string>
+    <string name="detail_buttons_delete">DELETE</string>
+    <string name="detail_buttons_edit">EDIT</string>
 </resources>
