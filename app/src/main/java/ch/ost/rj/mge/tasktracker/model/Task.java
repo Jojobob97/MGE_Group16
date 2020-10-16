@@ -1,14 +1,27 @@
 package ch.ost.rj.mge.tasktracker.model;
 
-public class Task {
-    private String title;
-    private double targetEffort;
-    private double actualEffort;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    public Task(String title, double targetEffort, double actualEffort) {
+@Entity
+public class Task {
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+    @ColumnInfo(name = "title")
+    public String title;
+    @ColumnInfo(name = "targetEffort")
+    public double targetEffort;
+    @ColumnInfo(name = "actualEffort")
+    public double actualEffort;
+    @ColumnInfo(name = "trackingState")
+    public boolean trackingState;
+
+    public Task(String title, double targetEffort, double actualEffort, boolean trackingState) {
         this.title = title;
         this.targetEffort = targetEffort;
         this.actualEffort = actualEffort;
+        this.trackingState = trackingState;
     }
 
     public String getTitle() {
