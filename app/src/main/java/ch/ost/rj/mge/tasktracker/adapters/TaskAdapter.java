@@ -10,13 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ch.ost.rj.mge.tasktracker.model.Task;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
-    private final ArrayList<Task> tasks;
+    private final List<Task> tasks;
 
-    public TaskAdapter(ArrayList<Task> tasks) {
+    public TaskAdapter(List<Task> tasks) {
         this.tasks = tasks;
     }
 
