@@ -7,4 +7,6 @@
     <string name="detail_start">Start/Stop</string>
     <string name="edit_save_button">Save</string>
     <string name="new_task_btn">New Task</string>
+    <string name="detail_buttons_delete">DELETE</string>
+    <string name="detail_buttons_edit">EDIT</string>
 </resources>

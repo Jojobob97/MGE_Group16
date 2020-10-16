@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,6 +24,11 @@ public class OverviewActivity extends AppCompatActivity {
     FloatingActionButton floating_new_btn;
     Button toDetailBtn;
     RecyclerView.Adapter<TaskViewHolder> adapter;
+
+    public static Intent createIntent(Context context) {
+        Intent intent = new Intent(context, OverviewActivity.class);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
