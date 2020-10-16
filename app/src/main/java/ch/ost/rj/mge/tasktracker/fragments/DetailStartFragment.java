@@ -46,7 +46,6 @@ public class DetailStartFragment extends Fragment {
         startSwitch.setChecked(initialTaskRunning);
 
         startSwitch.setOnClickListener(v -> {
-            System.out.println("Callback");
             initialTaskRunning = !initialTaskRunning;
             callback.onSwitchChange(initialTaskRunning);
         });

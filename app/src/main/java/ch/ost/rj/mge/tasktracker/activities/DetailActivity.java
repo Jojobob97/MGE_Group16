@@ -14,14 +14,18 @@ import ch.ost.rj.mge.tasktracker.fragments.DetailEffortFragment;
 import ch.ost.rj.mge.tasktracker.fragments.DetailStartFragment;
 import ch.ost.rj.mge.tasktracker.fragments.DetailStartFragmentCallback;
 import ch.ost.rj.mge.tasktracker.fragments.DetailTimerFragment;
+import ch.ost.rj.mge.tasktracker.fragments.DetailTimerFragmentCallback;
 
-public class DetailActivity extends AppCompatActivity implements DetailStartFragmentCallback {
+public class DetailActivity extends AppCompatActivity implements DetailStartFragmentCallback, DetailTimerFragmentCallback {
 
     private DetailEffortFragment detailEffortFragment;
     private DetailStartFragment detailStartFragment;
     private DetailTimerFragment detailTimerFragment;
     private DetailButtonsFragment detailButtonsFragment;
     private boolean initialTaskRunning;
+    private double taskActionTime;
+    private double taskTargetTime;
+
 
     public static Intent createIntent(Context context) {
         Intent intent = new Intent(context, DetailActivity.class);
@@ -39,9 +43,11 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        initialTaskRunning = false; //Variable bei öffnen von Activity übergeben.
+        initialTaskRunning = false; //Variable aus DB lesen.
+        taskActionTime = 0.0; //Variable aus DB lesen.
+        taskTargetTime = 3.5; //Variable aus DB lesen.
 
-        detailEffortFragment = DetailEffortFragment.create();
+        detailEffortFragment = DetailEffortFragment.create(taskTargetTime, taskActionTime);
         detailStartFragment = DetailStartFragment.create(initialTaskRunning);
         detailTimerFragment = DetailTimerFragment.create();
         detailButtonsFragment = DetailButtonsFragment.create();
@@ -79,8 +85,11 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
 
     @Override
     public void onSwitchChange(boolean newSwitchState) {
+        System.out.println("Callback SwitchChange");
+
         initialTaskRunning = newSwitchState;
         if (initialTaskRunning) {
+
             getSupportFragmentManager()
                 .beginTransaction()
                 .remove(detailEffortFragment)
@@ -91,9 +100,18 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
             getSupportFragmentManager()
                 .beginTransaction()
                 .remove(detailTimerFragment)
-                .add(R.id.detail_effort_container, detailEffortFragment)
+                .commitNow(); //CommitNow because Callback of detailTimerFragment has to update taskActionTime
+            detailEffortFragment = DetailEffortFragment.create(taskTargetTime, taskActionTime);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.detail_effort_container, detailEffortFragment)
                 .commit();
         }
+    }
+
+    @Override
+    public void safeChronometer(double time) {
+        taskActionTime += time;
     }
 
 

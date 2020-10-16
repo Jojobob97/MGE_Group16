@@ -7,10 +7,11 @@
     android:padding="8dp"
     tools:context=".fragments.DetailTimerFragment">
 
-    <TextView
+    <Chronometer
+        android:id="@+id/detail_timer_chronometer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="00:00:00"
+        style="@style/DetailTimerText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
