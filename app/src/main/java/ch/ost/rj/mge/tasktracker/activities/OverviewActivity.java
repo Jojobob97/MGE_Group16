@@ -47,8 +47,6 @@ public class OverviewActivity extends AppCompatActivity {
         Context context = this;
         Intent detailTaskIntent = DetailActivity.createIntent(context);
 
-        Log.d("DB", "Overview");
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         adapter = new TaskAdapter(TaskService.selectTasks(this));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
