@@ -30,14 +30,16 @@ public class TaskService {
         Log.d("DB", "selectTasks()");
         TaskDatabase db = Room.databaseBuilder(context, TaskDatabase.class, ROOM_DB).allowMainThreadQueries().build();
         List<Task> tasks = db.taskDao().getTasks();
-        for (Task task : tasks) {
-            Log.d("DB", "DB Entry | " + task.id + " | " + task.title + " | " + task.actualEffort + " | " + task.targetEffort + " | " + task.trackingState);
-        }
-        TaskRepository.taskSelect = tasks;
         db.close();
         Collections.reverse(tasks);
 
         return tasks;
     }
 
+    public static Task selectSingleTask(Context context, int taskId) {
+        TaskDatabase db = Room.databaseBuilder(context, TaskDatabase.class, ROOM_DB).allowMainThreadQueries().build();
+        Task task = db.taskDao().getSingleTask(taskId);
+        db.close();
+        return task;
+    }
 }
