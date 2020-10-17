@@ -88,8 +88,8 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            onBackPressed();
-            return true;
+            Intent intent = new Intent(this, OverviewActivity.class);
+            this.startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
