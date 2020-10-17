@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,10 +42,7 @@ public class OverviewActivity extends AppCompatActivity {
         Context context = this;
         Intent detailTaskIntent = DetailActivity.createIntent(context);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         adapter = new TaskAdapter(TaskService.selectTasks(this));
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-
         RecyclerView recyclerView = findViewById(R.id.overview_tasks);
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
@@ -61,9 +59,7 @@ public class OverviewActivity extends AppCompatActivity {
                     }
                 })
         );
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        renderOverview(this, adapter, recyclerView);
 
         floating_new_btn = findViewById(R.id.floating_action_button_new);
         toDetailBtn = findViewById(R.id.toDetailButton);
@@ -78,4 +74,22 @@ public class OverviewActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter = new TaskAdapter(TaskService.selectTasks(this));
+        RecyclerView recyclerView = findViewById(R.id.overview_tasks);
+        renderOverview(this, adapter, recyclerView);
+
+    }
+
+    public static void renderOverview(Context context, RecyclerView.Adapter adapter, RecyclerView recyclerView) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+    }
+
 }
