@@ -19,17 +19,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-
-    <!--TextView
-        android:id="@+id/editTitleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/edit_title_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activityTitle" /-->
-
     <EditText
         android:id="@+id/editTitleInput"
         android:layout_width="0dp"
@@ -42,15 +31,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         style="@style/TextEdit"/>
 
-    <!--TextView
-        android:id="@+id/editTargetText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_target_text"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTitleText" /-->
-
     <EditText
         android:id="@+id/editTargetInput"
         android:layout_width="0dp"
@@ -62,13 +42,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTitleInput"
         style="@style/TextEdit"/>
-
-    <!--androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="110dp" /-->
 
     <Button
         android:id="@+id/editSaveBtn"

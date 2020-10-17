@@ -8,4 +8,5 @@
     <string name="detail_buttons_delete">DELETE</string>
     <string name="detail_buttons_edit">EDIT</string>
     <string name="title_new_task">Create new Task</string>
+    <string name="activity_title_edit">Edit Task</string>
 </resources>

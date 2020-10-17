@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.ost.rj.mge.tasktracker.R;
 import ch.ost.rj.mge.tasktracker.model.Task;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
@@ -28,14 +29,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View view = inflater.inflate(
-                android.R.layout.simple_list_item_2,
+                R.layout.item_task,
                 parent,
                 false);
 
-        TextView titleTextView = view.findViewById(android.R.id.text1);
-        TextView effortTextView = view.findViewById(android.R.id.text2);
+        TextView titleTextView = view.findViewById(R.id.task_title);
+        TextView effortTextView = view.findViewById(R.id.task_information);
+        TextView progressTextView = view.findViewById(R.id.task_progress);
 
-        return new TaskViewHolder(view, titleTextView, effortTextView);
+        return new TaskViewHolder(view, titleTextView, effortTextView, progressTextView);
     }
 
     @Override
@@ -43,6 +45,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         Task task = this.tasks.get(position);
         holder.titleTextView.setText(task.getTitle());
         holder.effortTextView.setText("Actual: " + task.getActualEffort() +", Target: " + task.getTargetEffort());
+        int progress = (int)((100 / task.getTargetEffort()) * task.getActualEffort());
+        holder.progressTextView.setText(String.valueOf(progress) + "%");
     }
 
     @Override
