@@ -42,4 +42,10 @@ public class TaskService {
         db.close();
         return task;
     }
+
+    public static void updateTask(Context context, Task task) {
+        TaskDatabase db = Room.databaseBuilder(context, TaskDatabase.class, ROOM_DB).allowMainThreadQueries().build();
+        db.taskDao().updateTask(task);
+        db.close();
+    }
 }
