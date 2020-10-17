@@ -30,20 +30,15 @@ public class TaskService {
 
     public static List<Task> selectTasks(Context context) {
         Log.d("DB", "selectTasks()");
-        List<Task> result = null;
+        TaskDatabase db = Room.databaseBuilder(context, TaskDatabase.class, ROOM_DB).allowMainThreadQueries().build();
+        List<Task> tasks = db.taskDao().getTasks();
+        for (Task task : tasks) {
+            Log.d("DB", "DB Entry | " + task.id + " | " + task.title + " | " + task.actualEffort + " | " + task.targetEffort + " | " + task.trackingState);
+        }
+        TaskRepository.taskSelect = tasks;
+        db.close();
 
-        Runnable read = () -> {
-            TaskDatabase db = Room.databaseBuilder(context, TaskDatabase.class, ROOM_DB).build();
-            List<Task> tasks = db.taskDao().getTasks();
-            for (Task task : tasks) {
-                Log.d("DB", "DB Entry | " + task.id + " | " + task.title + " | " + task.actualEffort + " | " + task.targetEffort + " | " + task.trackingState);
-            }
-            TaskRepository.taskSelect = tasks;
 
-            db.close();
-        };
-        new Thread(read).start();
-
-        return TaskRepository.getTasks();
+        return tasks;
     }
 }
