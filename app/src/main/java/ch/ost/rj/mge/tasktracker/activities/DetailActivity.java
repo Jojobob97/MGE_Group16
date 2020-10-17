@@ -15,6 +15,8 @@ import ch.ost.rj.mge.tasktracker.fragments.DetailStartFragment;
 import ch.ost.rj.mge.tasktracker.fragments.DetailStartFragmentCallback;
 import ch.ost.rj.mge.tasktracker.fragments.DetailTimerFragment;
 import ch.ost.rj.mge.tasktracker.fragments.DetailTimerFragmentCallback;
+import ch.ost.rj.mge.tasktracker.model.Task;
+import ch.ost.rj.mge.tasktracker.services.TaskService;
 
 public class DetailActivity extends AppCompatActivity implements DetailStartFragmentCallback, DetailTimerFragmentCallback {
 
@@ -26,6 +28,8 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
     private boolean initialTaskRunning;
     private double taskActionTime;
     private double taskTargetTime;
+    private int taskId;
+    private Task task;
 
 
     public static Intent createIntent(Context context) {
@@ -38,15 +42,19 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        Intent intent = getIntent();
+        taskId = intent.getIntExtra("taskId", 0);
+        task = TaskService.selectSingleTask(this, taskId);
+
+        initialTaskRunning = false;
+        taskActionTime = task.getActualEffort();
+        taskTargetTime = task.getTargetEffort();
+
         //Add Back Button to ActionBar - needs @Override onOptionsItemSelected to navigate to back
         actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(initialTaskRunning);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        initialTaskRunning = true; //Variable aus DB lesen.
-        taskActionTime = 0.0; //Variable aus DB lesen.
-        taskTargetTime = 3.5; //Variable aus DB lesen.
 
         detailEffortFragment = DetailEffortFragment.create(taskTargetTime, taskActionTime);
         detailStartFragment = DetailStartFragment.create(initialTaskRunning);
@@ -116,6 +124,8 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
     @Override
     public void safeChronometer(double time) {
         taskActionTime += time;
+        task.setActualEffort(taskActionTime);
+        TaskService.updateTask(this, task);
     }
 
 

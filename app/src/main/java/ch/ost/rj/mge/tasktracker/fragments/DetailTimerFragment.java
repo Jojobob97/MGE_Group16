@@ -35,7 +35,7 @@ public class DetailTimerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View fragment = inflater.inflate(R.layout.fragment_detail_timer, container, false);
         detailTimerChronometer = fragment.findViewById(R.id.detail_timer_chronometer);
-        //detailTimerChronometer.setBase(SystemClock.elapsedRealtime() - (0 * 60000 + 55 * 1000));
+        detailTimerChronometer.setBase(SystemClock.elapsedRealtime() - (60 * 60000 + 55 * 1000));
         detailTimerChronometer.start();
 
         return fragment;

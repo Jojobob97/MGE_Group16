@@ -38,7 +38,7 @@ public class DetailButtonsFragment extends Fragment {
 
         deleteBtn.setOnClickListener(v -> {
             Intent intent = OverviewActivity.createIntent(this.getContext());
-            //ask before delete or Snackbar
+
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(Objects.requireNonNull(this.getContext()));
             alertBuilder.setMessage("Are you sure to delete this task?\nThis action can't be undone.");
             alertBuilder.setCancelable(true);
