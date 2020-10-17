@@ -1,7 +1,6 @@
 package ch.ost.rj.mge.tasktracker.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,8 +15,6 @@ import android.widget.Button;
 import java.util.Objects;
 
 import ch.ost.rj.mge.tasktracker.R;
-import ch.ost.rj.mge.tasktracker.activities.EditActivity;
-import ch.ost.rj.mge.tasktracker.activities.OverviewActivity;
 
 public class DetailButtonsFragment extends Fragment {
 
@@ -44,31 +41,27 @@ public class DetailButtonsFragment extends Fragment {
         editBtn = fragment.findViewById(R.id.detail_button_edit);
         deleteBtn = fragment.findViewById(R.id.detail_button_delete);
 
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(Objects.requireNonNull(this.getContext()));
+        alertBuilder.setMessage("Are you sure to delete this task?\nThis action can't be undone.");
+        alertBuilder.setCancelable(true);
+
+        alertBuilder.setPositiveButton(
+                "DELETE",
+                (dialog, id) -> {
+                    dialog.cancel();
+                    callback.deleteTask();
+                });
+        alertBuilder.setNegativeButton(
+                "CANCEL",
+                (dialog, id) -> dialog.cancel());
+        AlertDialog alert = alertBuilder.create();
+
+
         editBtn.setOnClickListener(v -> {
-            Intent intent = EditActivity.createIntent(this.getContext());
-            startActivity(intent);
+            callback.editTask();
         });
 
         deleteBtn.setOnClickListener(v -> {
-            Intent intent = OverviewActivity.createIntent(this.getContext());
-
-            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(Objects.requireNonNull(this.getContext()));
-            alertBuilder.setMessage("Are you sure to delete this task?\nThis action can't be undone.");
-            alertBuilder.setCancelable(true);
-
-            alertBuilder.setPositiveButton(
-                    "DELETE",
-                    (dialog, id) -> {
-                        callback.deleteTask();
-                        dialog.cancel();
-                        startActivity(intent);
-                    });
-
-            alertBuilder.setNegativeButton(
-                    "CANCEL",
-                    (dialog, id) -> dialog.cancel());
-
-            AlertDialog alert = alertBuilder.create();
             alert.show();
         });
 

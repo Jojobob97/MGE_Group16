@@ -27,6 +27,7 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
     private DetailButtonsFragment detailButtonsFragment;
     private ActionBar actionBar;
     private boolean initialTaskRunning;
+    private String taskTitle;
     private double taskActionTime;
     private double taskTargetTime;
     private int taskId;
@@ -48,6 +49,7 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
         task = TaskService.selectSingleTask(this, taskId);
 
         initialTaskRunning = false;
+        taskTitle = task.getTitle();
         taskActionTime = task.getActualEffort();
         taskTargetTime = task.getTargetEffort();
 
@@ -57,7 +59,7 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        detailEffortFragment = DetailEffortFragment.create(taskTargetTime, taskActionTime);
+        detailEffortFragment = DetailEffortFragment.create(taskTargetTime, taskActionTime, taskTitle);
         detailStartFragment = DetailStartFragment.create(initialTaskRunning);
         detailTimerFragment = DetailTimerFragment.create();
         detailButtonsFragment = DetailButtonsFragment.create();
@@ -113,7 +115,7 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
                 .beginTransaction()
                 .remove(detailTimerFragment)
                 .commitNow(); //CommitNow because Callback of detailTimerFragment has to update taskActionTime
-            detailEffortFragment = DetailEffortFragment.create(taskTargetTime, taskActionTime);
+            detailEffortFragment = DetailEffortFragment.create(taskTargetTime, taskActionTime, taskTitle);
             getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.detail_effort_container, detailEffortFragment)
@@ -132,6 +134,15 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
     @Override
     public void deleteTask() {
         TaskService.deleteTask(this, task);
+        Intent intent = OverviewActivity.createIntent(this);
+        startActivity(intent);
+    }
+
+    @Override
+    public void editTask() {
+        Intent intent = EditActivity.createIntent(this);
+        intent.putExtra("taskId", taskId);
+        startActivity(intent);
     }
 
 }

@@ -22,6 +22,11 @@
             @style/TextAppearance.MaterialComponents.Headline6
         </item>
     </style>
+    <style name="DetailTitleText">
+        <item name="android:textAppearance">
+            @style/TextAppearance.MaterialComponents.Headline4
+        </item>
+    </style>
     <style name="TextEdit">
         <item name="android:textSize">20sp</item>
     </style>
