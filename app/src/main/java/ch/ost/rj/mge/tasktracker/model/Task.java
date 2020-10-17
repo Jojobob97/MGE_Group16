@@ -24,6 +24,8 @@ public class Task {
         this.trackingState = trackingState;
     }
 
+    public int getId() {return id;}
+
     public String getTitle() {
         return title;
     }
