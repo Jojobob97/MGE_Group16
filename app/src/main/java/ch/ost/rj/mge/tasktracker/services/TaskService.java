@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.room.Dao;
 import androidx.room.Room;
 
+import java.util.Collections;
 import java.util.List;
 
 import ch.ost.rj.mge.tasktracker.database.TaskDao;
@@ -37,7 +38,7 @@ public class TaskService {
         }
         TaskRepository.taskSelect = tasks;
         db.close();
-
+        Collections.reverse(tasks);
 
         return tasks;
     }
