@@ -14,6 +14,7 @@ import java.util.List;
 
 import ch.ost.rj.mge.tasktracker.R;
 import ch.ost.rj.mge.tasktracker.model.Task;
+import ch.ost.rj.mge.tasktracker.services.TaskService;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     private final List<Task> tasks;
@@ -44,7 +45,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task task = this.tasks.get(position);
         holder.titleTextView.setText(task.getTitle());
-        holder.effortTextView.setText("Actual: " + task.getActualEffort() +", Target: " + task.getTargetEffort());
+        double actualEffort = TaskService.round(task.getActualEffort(), 2);
+        holder.effortTextView.setText("Actual: " + actualEffort +", Target: " + task.getTargetEffort());
         int progress = (int)((100 / task.getTargetEffort()) * task.getActualEffort());
         holder.progressTextView.setText(String.valueOf(progress) + "%");
     }

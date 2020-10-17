@@ -47,7 +47,14 @@ public class TaskService {
         db.taskDao().updateTask(task);
         db.close();
     }
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
 
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
     public static void deleteTask(Context context, Task task) {
         TaskDatabase db = Room.databaseBuilder(context, TaskDatabase.class, ROOM_DB).allowMainThreadQueries().build();
         db.taskDao().deleteTask(task);
