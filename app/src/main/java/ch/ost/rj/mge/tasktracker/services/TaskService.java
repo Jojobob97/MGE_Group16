@@ -1,15 +1,12 @@
 package ch.ost.rj.mge.tasktracker.services;
 
 import android.content.Context;
-import android.os.HandlerThread;
 import android.util.Log;
 
-import androidx.room.Dao;
 import androidx.room.Room;
 
 import java.util.List;
 
-import ch.ost.rj.mge.tasktracker.database.TaskDao;
 import ch.ost.rj.mge.tasktracker.database.TaskDatabase;
 import ch.ost.rj.mge.tasktracker.model.Task;
 import ch.ost.rj.mge.tasktracker.model.TaskRepository;
@@ -46,4 +43,5 @@ public class TaskService {
 
         return TaskRepository.getTasks();
     }
+
 }
