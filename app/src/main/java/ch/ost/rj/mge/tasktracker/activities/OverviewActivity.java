@@ -29,6 +29,7 @@ public class OverviewActivity extends AppCompatActivity {
     FloatingActionButton floating_new_btn;
     Button toDetailBtn;
     RecyclerView.Adapter<TaskViewHolder> adapter;
+    private TaskDatabase taskDatabase;
 
     public static Intent createIntent(Context context) {
         Intent intent = new Intent(context, OverviewActivity.class);

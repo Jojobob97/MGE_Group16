@@ -22,6 +22,7 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
     private DetailStartFragment detailStartFragment;
     private DetailTimerFragment detailTimerFragment;
     private DetailButtonsFragment detailButtonsFragment;
+    private ActionBar actionBar;
     private boolean initialTaskRunning;
     private double taskActionTime;
     private double taskTargetTime;
@@ -38,12 +39,12 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
         setContentView(R.layout.activity_detail);
 
         //Add Back Button to ActionBar - needs @Override onOptionsItemSelected to navigate to back
-        ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(initialTaskRunning);
         }
 
-        initialTaskRunning = false; //Variable aus DB lesen.
+        initialTaskRunning = true; //Variable aus DB lesen.
         taskActionTime = 0.0; //Variable aus DB lesen.
         taskTargetTime = 3.5; //Variable aus DB lesen.
 
@@ -63,6 +64,7 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
             getSupportFragmentManager()
                 .beginTransaction()
                 .remove(detailEffortFragment)
+                .remove(detailButtonsFragment)
                 .commit();
         }
         else {
@@ -86,13 +88,14 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
     @Override
     public void onSwitchChange(boolean newSwitchState) {
         System.out.println("Callback SwitchChange");
+        actionBar.setDisplayHomeAsUpEnabled(!newSwitchState); //hides/shows home button of action bar
 
         initialTaskRunning = newSwitchState;
         if (initialTaskRunning) {
-
             getSupportFragmentManager()
                 .beginTransaction()
                 .remove(detailEffortFragment)
+                .remove(detailButtonsFragment)
                 .add(R.id.detail_timer_container, detailTimerFragment)
                 .commit();
         }
@@ -103,8 +106,9 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
                 .commitNow(); //CommitNow because Callback of detailTimerFragment has to update taskActionTime
             detailEffortFragment = DetailEffortFragment.create(taskTargetTime, taskActionTime);
             getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.detail_effort_container, detailEffortFragment)
+                .beginTransaction()
+                .add(R.id.detail_effort_container, detailEffortFragment)
+                .add(R.id.detail_buttons_container, detailButtonsFragment)
                 .commit();
         }
     }
