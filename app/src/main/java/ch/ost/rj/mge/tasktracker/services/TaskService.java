@@ -47,4 +47,10 @@ public class TaskService {
         db.taskDao().updateTask(task);
         db.close();
     }
+
+    public static void deleteTask(Context context, Task task) {
+        TaskDatabase db = Room.databaseBuilder(context, TaskDatabase.class, ROOM_DB).allowMainThreadQueries().build();
+        db.taskDao().deleteTask(task);
+        db.close();
+    }
 }

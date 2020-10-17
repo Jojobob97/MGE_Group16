@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import ch.ost.rj.mge.tasktracker.R;
 import ch.ost.rj.mge.tasktracker.fragments.DetailButtonsFragment;
+import ch.ost.rj.mge.tasktracker.fragments.DetailButtonsFragmentCallback;
 import ch.ost.rj.mge.tasktracker.fragments.DetailEffortFragment;
 import ch.ost.rj.mge.tasktracker.fragments.DetailStartFragment;
 import ch.ost.rj.mge.tasktracker.fragments.DetailStartFragmentCallback;
@@ -18,7 +19,7 @@ import ch.ost.rj.mge.tasktracker.fragments.DetailTimerFragmentCallback;
 import ch.ost.rj.mge.tasktracker.model.Task;
 import ch.ost.rj.mge.tasktracker.services.TaskService;
 
-public class DetailActivity extends AppCompatActivity implements DetailStartFragmentCallback, DetailTimerFragmentCallback {
+public class DetailActivity extends AppCompatActivity implements DetailStartFragmentCallback, DetailTimerFragmentCallback, DetailButtonsFragmentCallback {
 
     private DetailEffortFragment detailEffortFragment;
     private DetailStartFragment detailStartFragment;
@@ -128,5 +129,9 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
         TaskService.updateTask(this, task);
     }
 
+    @Override
+    public void deleteTask() {
+        TaskService.deleteTask(this, task);
+    }
 
 }
