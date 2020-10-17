@@ -42,7 +42,6 @@ public class OverviewActivity extends AppCompatActivity {
         Context context = this;
         Intent detailTaskIntent = DetailActivity.createIntent(context);
 
-        adapter = new TaskAdapter(TaskService.selectTasks(this));
         RecyclerView recyclerView = findViewById(R.id.overview_tasks);
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
@@ -59,18 +58,12 @@ public class OverviewActivity extends AppCompatActivity {
                     }
                 })
         );
-        renderOverview(this, adapter, recyclerView);
+        renderOverview(this, recyclerView);
 
         floating_new_btn = findViewById(R.id.floating_action_button_new);
-        toDetailBtn = findViewById(R.id.toDetailButton);
 
         floating_new_btn.setOnClickListener(v -> {
             Intent intent = EditActivity.createIntent(this);
-            startActivity(intent);
-        });
-
-        toDetailBtn.setOnClickListener(v -> {
-            Intent intent = DetailActivity.createIntent(this);
             startActivity(intent);
         });
     }
@@ -78,13 +71,13 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        adapter = new TaskAdapter(TaskService.selectTasks(this));
         RecyclerView recyclerView = findViewById(R.id.overview_tasks);
-        renderOverview(this, adapter, recyclerView);
+        renderOverview(this, recyclerView);
 
     }
 
-    public static void renderOverview(Context context, RecyclerView.Adapter adapter, RecyclerView recyclerView) {
+    public void renderOverview(Context context, RecyclerView recyclerView) {
+        adapter = new TaskAdapter(TaskService.selectTasks(this));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
