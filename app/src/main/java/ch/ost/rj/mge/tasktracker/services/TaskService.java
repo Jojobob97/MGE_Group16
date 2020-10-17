@@ -10,7 +10,6 @@ import java.util.List;
 
 import ch.ost.rj.mge.tasktracker.database.TaskDatabase;
 import ch.ost.rj.mge.tasktracker.model.Task;
-import ch.ost.rj.mge.tasktracker.model.TaskRepository;
 
 public class TaskService {
     private static final String ROOM_DB = "room.db";
