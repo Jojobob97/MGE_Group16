@@ -18,6 +18,7 @@ public class DetailTimerFragment extends Fragment {
 
     private Chronometer detailTimerChronometer;
     private DetailTimerFragmentCallback callback;
+
     public static DetailTimerFragment create() { return new DetailTimerFragment(); }
 
     @Override

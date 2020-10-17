@@ -25,5 +25,5 @@ public interface TaskDao {
     void insert(Task task);
 
     @Delete
-    void delete(Task task);
+    void deleteTask(Task task);
 }

@@ -1,8 +1,10 @@
 package ch.ost.rj.mge.tasktracker.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -21,8 +23,19 @@ public class DetailButtonsFragment extends Fragment {
 
     private Button editBtn;
     private Button deleteBtn;
+    private DetailButtonsFragmentCallback callback;
 
     public static DetailButtonsFragment create() { return new DetailButtonsFragment(); }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            callback = (DetailButtonsFragmentCallback) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Owner activity must implement LoginSubmitFragmentCallback.");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +59,7 @@ public class DetailButtonsFragment extends Fragment {
             alertBuilder.setPositiveButton(
                     "DELETE",
                     (dialog, id) -> {
-                        //callback to delete task from DB !!
+                        callback.deleteTask();
                         dialog.cancel();
                         startActivity(intent);
                     });
