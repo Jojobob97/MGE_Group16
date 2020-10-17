@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.room.Room;
 
+import java.util.Collections;
 import java.util.List;
 
 import ch.ost.rj.mge.tasktracker.database.TaskDatabase;
@@ -27,21 +28,16 @@ public class TaskService {
 
     public static List<Task> selectTasks(Context context) {
         Log.d("DB", "selectTasks()");
-        List<Task> result = null;
+        TaskDatabase db = Room.databaseBuilder(context, TaskDatabase.class, ROOM_DB).allowMainThreadQueries().build();
+        List<Task> tasks = db.taskDao().getTasks();
+        for (Task task : tasks) {
+            Log.d("DB", "DB Entry | " + task.id + " | " + task.title + " | " + task.actualEffort + " | " + task.targetEffort + " | " + task.trackingState);
+        }
+        TaskRepository.taskSelect = tasks;
+        db.close();
+        Collections.reverse(tasks);
 
-        Runnable read = () -> {
-            TaskDatabase db = Room.databaseBuilder(context, TaskDatabase.class, ROOM_DB).build();
-            List<Task> tasks = db.taskDao().getTasks();
-            for (Task task : tasks) {
-                Log.d("DB", "DB Entry | " + task.id + " | " + task.title + " | " + task.actualEffort + " | " + task.targetEffort + " | " + task.trackingState);
-            }
-            TaskRepository.taskSelect = tasks;
-
-            db.close();
-        };
-        new Thread(read).start();
-
-        return TaskRepository.getTasks();
+        return tasks;
     }
 
 }
