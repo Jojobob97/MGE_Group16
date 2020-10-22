@@ -21,6 +21,7 @@ public class EditActivity extends AppCompatActivity {
     EditText targetEffort;
     Button saveBtn;
     int currentTaskId = 0;
+    Task editTask;
 
     public static Intent createIntent(Context context) {
         Intent intent = new Intent(context, EditActivity.class);
@@ -34,22 +35,28 @@ public class EditActivity extends AppCompatActivity {
 
         activityTitle = findViewById(R.id.activityTitle);
         title = findViewById(R.id.editTitleInput);
+        Intent intent = getIntent();
+        currentTaskId = intent.getIntExtra("taskId", 0);
         targetEffort = findViewById(R.id.editTargetInput);
         if(currentTaskId != 0) {
             activityTitle.setText(R.string.activity_title_edit);
-            Task editTask = TaskService.selectSingleTask(this, currentTaskId);
+            editTask = TaskService.selectSingleTask(this, currentTaskId);
             title.setText(editTask.title);
             targetEffort.setText(String.valueOf(editTask.targetEffort));
         }
 
         saveBtn = findViewById(R.id.editSaveBtn);
         saveBtn.setOnClickListener(v -> {
-            title = findViewById(R.id.editTitleInput);
-            targetEffort = findViewById(R.id.editTargetInput);
-            Task task = new Task(title.getText().toString(), Double.parseDouble(targetEffort.getText().toString()), 0, false);
-            TaskService.insertTask(this, task);
-            Intent intent = OverviewActivity.createIntent(this);
-            startActivity(intent);
+            if(currentTaskId == 0) {
+                Task newTask = new Task(title.getText().toString(), Double.parseDouble(targetEffort.getText().toString()), 0, false);
+                TaskService.insertTask(this, newTask);
+            } else {
+                editTask.setTitle(title.getText().toString());
+                editTask.setTargetEffort(Double.valueOf(targetEffort.getText().toString()));
+                TaskService.updateTask(this, editTask);
+            }
+            Intent intentOverview = OverviewActivity.createIntent(this);
+            startActivity(intentOverview);
         });
 
         //Add Back Button to ActionBar - needs @Override onOptionsItemSelected to navigate to back
