@@ -66,24 +66,9 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
         getSupportFragmentManager()
             .beginTransaction()
             .add(R.id.detail_effort_container, detailEffortFragment)
-            .add(R.id.detail_timer_container, detailTimerFragment)
             .add(R.id.detail_start_container, detailStartFragment)
             .add(R.id.detail_buttons_container, detailButtonsFragment)
             .commit();
-
-        if (initialTaskRunning) {
-            getSupportFragmentManager()
-                .beginTransaction()
-                .remove(detailEffortFragment)
-                .remove(detailButtonsFragment)
-                .commit();
-        }
-        else {
-            getSupportFragmentManager()
-                .beginTransaction()
-                .remove(detailTimerFragment)
-                .commit();
-        }
     }
 
     @Override
@@ -98,8 +83,7 @@ public class DetailActivity extends AppCompatActivity implements DetailStartFrag
 
     @Override
     public void onSwitchChange(boolean newSwitchState) {
-        System.out.println("Callback SwitchChange");
-        actionBar.setDisplayHomeAsUpEnabled(!newSwitchState); //hides/shows home button of action bar
+        actionBar.setDisplayHomeAsUpEnabled(!newSwitchState); //hides/shows back button in action bar
 
         initialTaskRunning = newSwitchState;
         if (initialTaskRunning) {

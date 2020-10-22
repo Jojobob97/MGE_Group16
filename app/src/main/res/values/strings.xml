@@ -5,8 +5,8 @@
     <string name="detail_start">Start/Stop</string>
     <string name="edit_save_button">Save</string>
     <string name="new_task_btn">New Task</string>
-    <string name="detail_buttons_delete">DELETE</string>
-    <string name="detail_buttons_edit">EDIT</string>
+    <string name="detail_buttons_delete">Delete</string>
+    <string name="detail_buttons_edit">Edit</string>
     <string name="title_new_task">Create new Task</string>
     <string name="activity_title_edit">Edit Task</string>
 </resources>
